@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>活动团队项目看板</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-card: rgba(22, 22, 32, 0.8);
+      --accent-coach: #ff6b35;
+      --accent-mic: #00d4aa;
+      --accent-alumni: #8b5cf6;
+      --text-primary: #f0f0f5;
+      --text-secondary: #8888a0;
+      --text-muted: #55556a;
+      --border: rgba(255, 255, 255, 0.06);
+      --glow-coach: rgba(255, 107, 53, 0.15);
+      --glow-mic: rgba(0, 212, 170, 0.15);
+      --glow-alumni: rgba(139, 92, 246, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated background */
+    .bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .bg-gradient {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.4;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .bg-gradient-1 {
+      background: var(--accent-coach);
+      top: -200px;
+      left: -200px;
+      animation-delay: 0s;
+    }
+
+    .bg-gradient-2 {
+      background: var(--accent-mic);
+      bottom: -200px;
+      right: -200px;
+      animation-delay: -7s;
+    }
+
+    .bg-gradient-3 {
+      background: var(--accent-alumni);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 400px;
+      animation-delay: -14s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+
+    /* Header */
+    header {
+      position: relative;
+      z-index: 10;
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .timestamp {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Main content */
+    main {
+      position: relative;
+      z-index: 10;
+      padding: 0 60px 60px;
+    }
+
+    .board-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .board-subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 50px;
+      font-weight: 300;
+    }
+
+    /* Cards grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      backdrop-filter: blur(20px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .card-coach::before { background: var(--accent-coach); }
+    .card-mic::before { background: var(--accent-mic); }
+    .card-alumni::before { background: var(--accent-alumni); }
+
+    .card-coach:hover {
+      box-shadow: 0 20px 60px var(--glow-coach);
+      transform: translateY(-4px);
+    }
+
+    .card-mic:hover {
+      box-shadow: 0 20px 60px var(--glow-mic);
+      transform: translateY(-4px);
+    }
+
+    .card-alumni:hover {
+      box-shadow: 0 20px 60px var(--glow-alumni);
+      transform: translateY(-4px);
+    }
+
+    /* Card header */
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .card-coach .card-title { color: var(--accent-coach); }
+    .card-mic .card-title { color: var(--accent-mic); }
+    .card-alumni .card-title { color: var(--accent-alumni); }
+
+    /* Status badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .status-active {
+      background: rgba(0, 212, 170, 0.15);
+      color: var(--accent-mic);
+    }
+    .status-active::before { background: var(--accent-mic); }
+
+    .status-preparing {
+      background: rgba(255, 107, 53, 0.15);
+      color: var(--accent-coach);
+    }
+    .status-preparing::before { background: var(--accent-coach); }
+
+    .status-pending {
+      background: rgba(136, 136, 160, 0.15);
+      color: var(--text-secondary);
+    }
+    .status-pending::before { 
+      background: var(--text-secondary);
+      animation: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    /* Timeline */
+    .timeline {
+      margin-bottom: 24px;
+    }
+
+    .timeline-phase {
+      margin-bottom: 20px;
+    }
+
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .phase-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .phase-dates {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* Task list */
+    .task-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .task {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 10px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+
+    .task:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+    }
+
+    .task-person {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .task-action {
+      flex: 1;
+    }
+
+    .task-status {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    .task-done {
+      background: rgba(0, 212, 170, 0.15);
+      color: var(--accent-mic);
+    }
+
+    .task-wip {
+      background: rgba(255, 107, 53, 0.15);
+      color: var(--accent-coach);
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .empty-state-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+      opacity: 0.3;
+    }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 10;
+      padding: 40px 60px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      header, main, footer {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+      
+      header {
+        padding-top: 24px;
+      }
+
+      .board-title {
+        font-size: 32px;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated background -->
+  <div class="bg-canvas">
+    <div class="bg-gradient bg-gradient-1"></div>
+    <div class="bg-gradient bg-gradient-2"></div>
+    <div class="bg-gradient bg-gradient-3"></div>
+  </div>
+
+  <header>
+    <div class="logo">Project Board</div>
+    <div class="timestamp">更新于 2026.04.03 22:25</div>
+  </header>
+
+  <main>
+    <h1 class="board-title">活动团队项目看板</h1>
+    <p class="board-subtitle">实时追踪三个活动项目的进度与任务分配</p>
+
+    <div class="cards-grid">
+      <!-- Coach Program -->
+      <div class="card card-coach">
+        <div class="card-header">
+          <h2 class="card-title">Coach Program</h2>
+          <span class="status-badge status-active">招募中</span>
+        </div>
+        
+        <div class="timeline">
+          <div class="timeline-phase">
+            <div class="phase-header">
+              <span class="phase-name">招募期</span>
+              <span class="phase-dates">4/1 - 4/15</span>
+            </div>
+            <div class="task-list">
+              <div class="task">
+                <span class="task-person">Kacie</span>
+                <span class="task-action">小红书发布</span>
+                <span class="task-status task-wip">进行中</span>
+              </div>
+              <div class="task">
+                <span class="task-person">KK</span>
+                <span class="task-action">公众号发布</span>
+                <span class="task-status task-wip">进行中</span>
+              </div>
+              <div class="task">
+                <span class="task-person">田子</span>
+                <span class="task-action">微信号添加/咨询/通知</span>
+                <span class="task-status task-wip">进行中</span>
+              </div>
+              <div class="task">
+                <span class="task-person">Yiyao</span>
+                <span class="task-action">转发社群</span>
+                <span class="task-status task-done">已完成</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-phase">
+            <div class="phase-header">
+              <span class="phase-name">启动期</span>
+              <span class="phase-dates">4/15 - 6/30</span>
+            </div>
+            <div class="task-list">
+              <div class="task">
+                <span class="task-action">内部小伙伴报名 take 工作list</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Open Mic -->
+      <div class="card card-mic">
+        <div class="card-header">
+          <h2 class="card-title">Open Mic</h2>
+          <span class="status-badge status-preparing">筹备中</span>
+        </div>
+        
+        <div class="timeline">
+          <div class="timeline-phase">
+            <div class="phase-header">
+              <span class="phase-name">预计启动</span>
+              <span class="phase-dates">5月</span>
+            </div>
+            <div class="task-list">
+              <div class="task">
+                <span class="task-action">待补充具体事项...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 校友会 -->
+      <div class="card card-alumni">
+        <div class="card-header">
+          <h2 class="card-title">校友会</h2>
+          <span class="status-badge status-pending">待启动</span>
+        </div>
+        
+        <div class="empty-state">
+          <div class="empty-state-icon">📋</div>
+          <div>待补充项目详情</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    活动团队 · 项目管理看板
+  </footer>
+</body>
+</html>
