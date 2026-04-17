@@ -147,8 +147,9 @@ header h1 span {
 }
 
 .card[data-project="Coach Program"]::before { background: var(--orange); }
-.card[data-project="校友会 & 视频"]::before { background: var(--green); }
-.card[data-project="Countdown & Open Mic"]::before { background: var(--pink); }
+.card[data-project="思想串讲人 Idea Moderator"]::before { background: var(--green); }
+.card[data-project="校友会 Alumni"]::before { background: var(--purple); }
+.card[data-project="不止八分钟"]::before { background: var(--pink); }
 .card[data-project="志愿者招募"]::before { background: var(--teal); }
 
 .card:hover { background: var(--card-hover); border-color: #444c56; transform: translateY(-1px); }
@@ -171,9 +172,10 @@ header h1 span {
 }
 
 .card-project.coach { background: rgba(227,179,65,0.15); color: var(--orange); }
-.card-project.alumni { background: rgba(63,185,80,0.15); color: var(--green); }
-.card-project.countdown { background: rgba(247,120,186,0.15); color: var(--pink); }
-.card-project.volunteer { background: rgba(118,227,234,0.15); color: var(--teal); }
+.card-project.moderator { background: rgba(63,185,80,0.15); color: var(--green); }
+.card-project.alumni { background: rgba(188,140,255,0.15); color: var(--purple); }
+.card-project.beyond8 { background: rgba(247,120,186,0.15); color: var(--pink); }
+  .card-project.volunteer { background: rgba(118,227,234,0.15); color: var(--teal); }
 
 .card-title {
   font-size: 14px;
@@ -212,8 +214,10 @@ header h1 span {
 }
 
 .card-owner.coach::before { background-color: var(--orange); }
+  .card-owner.moderator::before { background-color: var(--green); }
 .card-owner.alumni::before { background-color: var(--green); }
-.card-owner.countdown::before { background-color: var(--pink); }
+.card-owner.alumni::before { background-color: var(--purple); }
+  .card-owner.beyond8::before { background-color: var(--pink); }
 .card-owner.volunteer::before { background-color: var(--teal); }
 
 .owner-avatar {
@@ -402,8 +406,10 @@ header h1 span {
 }
 
 .legend-dot.coach { background: var(--orange); }
+  .legend-dot.moderator { background: var(--green); }
 .legend-dot.alumni { background: var(--green); }
-.legend-dot.countdown { background: var(--pink); }
+.legend-dot.alumni { background: var(--purple); }
+  .legend-dot.beyond8 { background: var(--pink); }
 .legend-dot.volunteer { background: var(--teal); }
 
 /* Board title row */
@@ -479,24 +485,27 @@ header h1 span {
 
 <div class="legend">
   <div class="legend-item"><div class="legend-dot coach"></div>Coach Program</div>
-  <div class="legend-item"><div class="legend-dot alumni"></div>校友会 & 视频</div>
-  <div class="legend-item"><div class="legend-dot countdown"></div>Countdown & Open Mic</div>
+  <div class="legend-item"><div class="legend-dot moderator"></div>思想串讲人 Idea Moderator</div>
+  <div class="legend-item"><div class="legend-dot alumni"></div>校友会 Alumni</div>
+  <div class="legend-item"><div class="legend-dot beyond8"></div>不止八分钟</div>
   <div class="legend-item"><div class="legend-dot volunteer"></div>志愿者招募</div>
 </div>
 
 <div class="filter-bar">
   <button class="filter-btn active" data-filter="all">全部</button>
   <button class="filter-btn" data-filter="coach">Coach Program</button>
-  <button class="filter-btn" data-filter="alumni">校友会 & 视频</button>
-  <button class="filter-btn" data-filter="countdown">Countdown & Open Mic</button>
+  <button class="filter-btn" data-filter="moderator">思想串讲人</button>
+  <button class="filter-btn" data-filter="alumni">校友会</button>
+  <button class="filter-btn" data-filter="beyond8">不止八分钟</button>
   <button class="filter-btn" data-filter="volunteer">志愿者招募</button>
 </div>
 
 <div class="board-titles">
-  <div class="board-title-item"><div class="board-title-dot" style="background:var(--orange)"></div>Coach Program — Nancy</div>
-  <div class="board-title-item"><div class="board-title-dot" style="background:var(--green)"></div>校友会 & 视频 — 朱宁、KK</div>
-  <div class="board-title-item"><div class="board-title-dot" style="background:var(--pink)"></div>Countdown & Open Mic — Joy、JY</div>
-  <div class="board-title-item"><div class="board-title-dot" style="background:var(--teal)"></div>志愿者招募 — JY、Joy、KK</div>
+  <div class="board-title-item"><div class="board-title-dot" style="background:var(--orange)"></div>Coach Program</div>
+  <div class="board-title-item"><div class="board-title-dot" style="background:var(--green)"></div>思想串讲人 Idea Moderator</div>
+  <div class="board-title-item"><div class="board-title-dot" style="background:var(--purple)"></div>校友会 Alumni</div>
+  <div class="board-title-item"><div class="board-title-dot" style="background:var(--pink)"></div>不止八分钟</div>
+  <div class="board-title-item"><div class="board-title-dot" style="background:var(--teal)"></div>志愿者招募</div>
 </div>
 
 <div class="board">
@@ -545,8 +554,9 @@ header h1 span {
       <label>项目</label>
       <select id="f-project">
         <option value="coach">Coach Program</option>
-        <option value="alumni">校友会 & 视频</option>
-        <option value="countdown">Countdown & Open Mic</option>
+        <option value="moderator">思想串讲人 Idea Moderator</option>
+        <option value="alumni">校友会 Alumni</option>
+        <option value="beyond8">不止八分钟</option>
         <option value="volunteer">志愿者招募</option>
       </select>
     </div>
@@ -588,8 +598,9 @@ header h1 span {
 // ── Data ──────────────────────────────────────────────────────────────────
 const PROJECTS = {
   coach: 'Coach Program',
-  alumni: '校友会 & 视频',
-  countdown: 'Countdown & Open Mic',
+  moderator: '思想串讲人 Idea Moderator',
+  alumni: '校友会 Alumni',
+  beyond8: '不止八分钟',
   volunteer: '志愿者招募'
 };
 
@@ -603,25 +614,7 @@ const OWNERS = {
 const today = '2026-04-14';
 
 let tasks = [
-  // Coach Program
-  { id: 1, project: 'coach', title: '发布志愿者工作招募公告（4/26启动会前）', owner: 'Nancy', date: '2026-04-25', status: 'running' },
-  { id: 2, project: 'coach', title: '面试筛选第一届学员', owner: 'Nancy', date: '', status: 'pending' },
-  { id: 3, project: 'coach', title: '确定第一届Coach Program学员名单', owner: 'Nancy', date: '', status: 'pending' },
-  // 校友会 & 视频
-  { id: 4, project: 'alumni', title: '整理讲者库名单', owner: '朱宁', date: '2026-04-12', status: 'done' },
-  { id: 5, project: 'alumni', title: '拟定第一场视频采访计划', owner: '朱宁', date: '', status: 'running' },
-  { id: 6, project: 'alumni', title: '以6/6第一场校友会为目标设计完整计划', owner: 'KK', date: '', status: 'pending' },
-  { id: 7, project: 'alumni', title: '邀请志愿者作为校友会观众', owner: 'KK', date: '', status: 'pending' },
-  // Countdown & Open Mic
-  { id: 8, project: 'countdown', title: 'Countdown时间确认（7/19、25、26）', owner: 'Joy', date: '', status: 'done' },
-  { id: 9, project: 'countdown', title: '确认Countdown大会主题框架', owner: 'Joy', date: '', status: 'pending' },
-  { id: 10, project: 'countdown', title: 'Open Mic 5月落地计划', owner: 'JY', date: '', status: 'pending' },
-  { id: 11, project: 'countdown', title: 'Open Mic 执行计划（下次会议前出）', owner: 'JY', date: '', status: 'pending' },
-  // 志愿者招募
-  { id: 12, project: 'volunteer', title: '制定志愿者招募计划', owner: 'JY', date: '', status: 'pending' },
-  { id: 13, project: 'volunteer', title: '启动志愿者招募（争取）', owner: 'JY', date: '', status: 'pending' },
-  { id: 14, project: 'volunteer', title: '重点招募主持组 & 拍摄剪辑组', owner: 'JY、KK', date: '', status: 'pending' },
-  { id: 15, project: 'volunteer', title: '建立主持人专项培养体系', owner: 'cz、KK', date: '', status: 'pending' },
+  // Tasks managed via UI
 ];
 
 let editingId = null;
@@ -633,7 +626,7 @@ function getInitials(name) {
 }
 
 function getAvatarColor(project) {
-  const colors = { coach: '#e3b341', alumni: '#3fb950', countdown: '#f778ba', volunteer: '#76e3ea' };
+  const colors = { coach: '#e3b341', moderator: '#3fb950', alumni: '#bc8cff', beyond8: '#f778ba', volunteer: '#76e3ea' };
   return colors[project] || '#888';
 }
 
