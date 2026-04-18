@@ -8,88 +8,101 @@
 :root{--bg:#0d1117;--card:#161b22;--card-h:#1f2937;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--red:#f85149;--yellow:#d29922}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px 24px 80px}
-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
-header h1{font-size:20px;font-weight:600;letter-spacing:-.3px}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
+.header-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+header h1{font-size:19px;font-weight:600;letter-spacing:-.3px}
 header h1 span{color:var(--accent)}
-.header-right{display:flex;align-items:center;gap:10px}
+.header-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .header-meta{font-size:12px;color:var(--muted)}
-.icon-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.icon-btn:hover{border-color:var(--accent);color:var(--accent)}
-.legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;padding:10px 14px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px}
-.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+.header-btn{height:30px;padding:0 12px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:12px;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;white-space:nowrap}
+.header-btn:hover{border-color:var(--accent);color:var(--accent)}
+.header-btn.danger:hover{border-color:var(--red);color:var(--red)}
+.header-btn.success{border-color:var(--accent);color:var(--accent);animation:popIn .3s}
+@keyframes popIn{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;padding:8px 12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;align-items:center}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted)}
 .legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
-.filter-bar{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
-.filter-btn{padding:5px 12px;border-radius:16px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.legend-sep{color:var(--border);font-size:14px}
+.filter-bar{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;align-items:center}
+.filter-btn{padding:5px 11px;border-radius:16px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap}
 .filter-btn:hover,.filter-btn.active{border-color:var(--accent);color:var(--accent)}
-.board{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:start}
 @media(max-width:1100px){.board{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){.board{grid-template-columns:1fr}}
-.lane{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:12px;min-height:160px}
+.lane{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:12px;min-height:140px}
 .lane-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .lane-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
 .lane-count{background:rgba(255,255,255,.1);color:var(--muted);font-size:10px;font-weight:600;padding:1px 7px;border-radius:8px}
-.cards{display:flex;flex-direction:column;gap:8px;min-height:40px;transition:background .2s}
-.cards.drag-over{background:rgba(88,166,255,.06);border-radius:6px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;cursor:grab;transition:all .15s;position:relative;overflow:hidden}
-.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:8px 0 0 8px}
+.cards{display:flex;flex-direction:column;gap:8px;min-height:40px;transition:background .2s;border-radius:6px}
+.cards.drag-over{background:rgba(88,166,255,.07)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:11px;cursor:grab;transition:all .15s;position:relative;overflow:hidden}
 .card:hover{background:var(--card-h);border-color:#444c56;transform:translateY(-1px)}
-.card.dragging{opacity:.4;cursor:grabbing}
-.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.card-project{font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px;white-space:nowrap}
-.card-title{font-size:13px;font-weight:500;line-height:1.5;margin-bottom:8px}
+.card.dragging{opacity:.35;cursor:grabbing}
+.card-project{font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px;white-space:nowrap;display:inline-block;margin-bottom:5px}
+.card-title{font-size:13px;font-weight:500;line-height:1.5;margin-bottom:7px}
 .card-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px}
 .card-owner{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px}
-.avatar{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;font-size:9px;font-weight:700;color:#000;flex-shrink:0}
+.avatar{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;font-size:9px;font-weight:700;color:#000;flex-shrink:0}
 .card-date{font-size:10px;color:var(--muted)}
 .card-date.overdue{color:var(--red);font-weight:600}
 .card-date.soon{color:var(--yellow)}
+/* Modal */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);z-index:100;align-items:center;justify-content:center}
 .modal-bg.open{display:flex}
 .modal{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;width:460px;max-width:92vw;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.5)}
-.modal h2{font-size:16px;margin-bottom:18px}
-.fg{margin-bottom:14px}
+.modal h2{font-size:16px;margin-bottom:16px}
+.fg{margin-bottom:12px}
 .fg label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px}
 .fg input,.fg select,.fg textarea{width:100%;padding:8px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;font-family:inherit;outline:none;transition:border .2s}
 .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--accent)}
 .fg textarea{resize:vertical;min-height:60px}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.mactions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
-.btn{padding:8px 18px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s}
+.mactions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;align-items:center}
+.btn{padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s}
 .btn-p{background:var(--accent);color:#000}
 .btn-p:hover{filter:brightness(1.1)}
 .btn-s{background:var(--border);color:var(--text)}
 .btn-s:hover{background:#444c56}
 .btn-d{background:rgba(248,81,73,.15);color:var(--red)}
 .btn-d:hover{background:rgba(248,81,73,.25)}
+/* Project modal */
+.proj-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.proj-dot{width:20px;height:20px;border-radius:4px;border:none;cursor:pointer;position:relative;overflow:hidden;flex-shrink:0}
+.proj-dot input[type=color]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.proj-row input{flex:1;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;outline:none;font-family:inherit}
+.proj-row input:focus{border-color:var(--accent)}
+.proj-rm{width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.proj-rm:hover{border-color:var(--red);color:var(--red)}
+/* FAB */
 .fab{position:fixed;bottom:24px;right:24px;z-index:50;width:48px;height:48px;border-radius:50%;border:none;background:var(--accent);color:#000;font-size:24px;font-weight:300;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(88,166,255,.35);transition:transform .2s}
 .fab:hover{transform:scale(1.1)}
-/* Project manage modal */
-.proj-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.proj-row .pdot{width:14px;height:14px;border-radius:3px;border:none;cursor:pointer;flex-shrink:0}
-.proj-row input{flex:1;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;outline:none}
-.proj-row input:focus{border-color:var(--accent)}
-.proj-row .rm{width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.proj-row .rm:hover{border-color:var(--red);color:var(--red)}
-.color-pick{position:relative;display:inline-block}
-.color-pick input[type=color]{position:absolute;bottom:0;left:0;width:14px;height:14px;opacity:0;cursor:pointer}
+/* Toast */
+.toast{position:fixed;bottom:80px;right:24px;z-index:200;background:var(--card);border:1px solid var(--accent);color:var(--accent);padding:10px 18px;border-radius:8px;font-size:13px;font-weight:500;box-shadow:0 4px 16px rgba(0,0,0,.4);animation:toastIn .3s}
+@keyframes toastIn{0%{transform:translateY(10px);opacity:0}100%{transform:translateY(0);opacity:1}}
 </style>
 </head>
 <body>
 <header>
-  <h1>🎯 <span>TEDx武康路</span> · 项目看板</h1>
+  <div class="header-left">
+    <h1>🎯 <span>TEDx武康路</span> · 项目看板</h1>
+    <span class="header-meta" id="today-label"></span>
+  </div>
   <div class="header-right">
-    <div class="header-meta" id="today-label"></div>
-    <button class="icon-btn" onclick="openProjModal()" title="项目管理">⚙️</button>
+    <button class="header-btn" id="btn-share" onclick="shareBoard()">📋 分享链接</button>
+    <button class="header-btn" onclick="openProjModal()">⚙️ 项目管理</button>
   </div>
 </header>
+
 <div class="legend" id="legend"></div>
 <div class="filter-bar" id="filters"></div>
+
 <div class="board">
   <div class="lane" data-status="pending"><div class="lane-head"><div class="lane-title">⏳ 待开始</div><span class="lane-count" id="cnt-pending">0</span></div><div class="cards" id="cards-pending"></div></div>
   <div class="lane" data-status="running"><div class="lane-head"><div class="lane-title">🔵 进行中</div><span class="lane-count" id="cnt-running">0</span></div><div class="cards" id="cards-running"></div></div>
   <div class="lane" data-status="done"><div class="lane-head"><div class="lane-title">✅ 已完成</div><span class="lane-count" id="cnt-done">0</span></div><div class="cards" id="cards-done"></div></div>
   <div class="lane" data-status="blocked"><div class="lane-head"><div class="lane-title">🔴 阻塞</div><span class="lane-count" id="cnt-blocked">0</span></div><div class="cards" id="cards-blocked"></div></div>
 </div>
+
 <!-- Task Modal -->
 <div class="modal-bg" id="taskModal">
   <div class="modal">
@@ -109,7 +122,8 @@ header h1 span{color:var(--accent)}
     </div>
   </div>
 </div>
-<!-- Project Manage Modal -->
+
+<!-- Project Modal -->
 <div class="modal-bg" id="projModal">
   <div class="modal">
     <h2>项目管理</h2>
@@ -117,10 +131,16 @@ header h1 span{color:var(--accent)}
     <div style="margin-top:12px">
       <button class="btn btn-s" onclick="addProject()" style="width:100%">＋ 添加项目</button>
     </div>
-    <div class="mactions"><div style="flex:1"></div><button class="btn btn-s" onclick="closeProjModal()">取消</button><button class="btn btn-p" onclick="saveProjects()">保存</button></div>
+    <div class="mactions">
+      <div style="flex:1"></div>
+      <button class="btn btn-s" onclick="closeProjModal()">取消</button>
+      <button class="btn btn-p" onclick="saveProjects()">保存</button>
+    </div>
   </div>
 </div>
+
 <button class="fab" onclick="openTaskModal()" title="添加任务">＋</button>
+
 <script>
 // ── Defaults ──
 const DEFAULT_PROJECTS = [
@@ -140,97 +160,137 @@ let tasks = [];
 let editId = null;
 let curFilter = 'all';
 let dragId = null;
-let tempProjects = []; // for project edit modal
-
-const today = new Date().toISOString().slice(0,10);
-
-// ── Persist ──
-function save(){ localStorage.setItem('tedx_tasks',JSON.stringify(tasks)); }
-function saveProj(){ localStorage.setItem('tedx_projects',JSON.stringify(projects)); }
-function load(){
-  try{ projects = JSON.parse(localStorage.getItem('tedx_projects')) } catch(e){}
-  if(!projects || !projects.length) projects = JSON.parse(JSON.stringify(DEFAULT_PROJECTS));
-  try{ tasks = JSON.parse(localStorage.getItem('tedx_tasks')) } catch(e){}
-  if(!tasks) tasks = [];
-}
-function projById(id){ return projects.find(p=>p.id===id) || {id,name:'未知',color:'#666'}; }
-function projKey(id){ return projById(id).id; }
+let tempProjects = [];
+let toastTimer = null;
 
 // ── Helpers ──
+const today = new Date().toISOString().slice(0,10);
 function initials(s){ return (s||'').split(/[,、\s]/).map(x=>x.trim()[0]||'').join('').slice(0,2); }
 function fmtDate(d){ if(!d) return ''; const o=new Date(d); return `${o.getMonth()+1}/${o.getDate()}截止`; }
 function dateCls(d){ if(!d) return ''; const diff=(new Date(d)-new Date(today))/(864e5); if(diff<0) return 'overdue'; if(diff<=3) return 'soon'; return ''; }
 
-// ── Render Legend ──
+// ── URL sync ──
+const LS_TASKS_KEY = 'tedx_tasks';
+const LS_PROJ_KEY = 'tedx_projects';
+const URL_PARAM = 'd';
+
+function encodeData(){
+  return btoa(unescape(encodeURIComponent(JSON.stringify({projects,tasks}))));
+}
+function decodeData(encoded){
+  try{
+    const raw = decodeURIComponent(escape(atob(encoded)));
+    const data = JSON.parse(raw);
+    if(data.projects && data.projects.length) projects = data.projects;
+    if(data.tasks && Array.isArray(data.tasks)) tasks = data.tasks;
+    return true;
+  }catch(e){ return false; }
+}
+
+function loadFromURL(){
+  const params = new URLSearchParams(location.search);
+  if(params.has(URL_PARAM)){
+    const ok = decodeData(params.get(URL_PARAM));
+    if(ok){
+      // merge with localStorage defaults if no data
+      saveAll();
+      return true;
+    }
+  }
+  return false;
+}
+
+function loadFromLS(){
+  try{ const s=localStorage.getItem(LS_PROJ_KEY); if(s) projects=JSON.parse(s); }catch(e){}
+  if(!projects||!projects.length) projects=JSON.parse(JSON.stringify(DEFAULT_PROJECTS));
+  try{ const s=localStorage.getItem(LS_TASKS_KEY); if(s) tasks=JSON.parse(s); }catch(e){}
+  if(!tasks) tasks=[];
+}
+function saveAll(){
+  try{ localStorage.setItem(LS_PROJ_KEY,JSON.stringify(projects)); }catch(e){}
+  try{ localStorage.setItem(LS_TASKS_KEY,JSON.stringify(tasks)); }catch(e){}
+}
+function projById(id){ return projects.find(p=>p.id===id)||{id,name:'未知',color:'#666'}; }
+
+// ── Share ──
+function shareBoard(){
+  const encoded = encodeData();
+  const url = `${location.origin}${location.pathname}?${URL_PARAM}=${encoded}`;
+  navigator.clipboard.writeText(url).then(()=>{
+    showToast('✅ 分享链接已复制到剪贴板！');
+  }).catch(()=>{
+    prompt('分享链接（手动复制）：', url);
+  });
+}
+
+// ── Toast ──
+function showToast(msg){
+  const old = document.getElementById('toast');
+  if(old) old.remove();
+  if(toastTimer) clearTimeout(toastTimer);
+  const el = document.createElement('div');
+  el.id = 'toast';
+  el.className = 'toast';
+  el.textContent = msg;
+  document.body.appendChild(el);
+  toastTimer = setTimeout(()=>el.remove(), 3000);
+}
+
+// ── Render ──
 function renderLegend(){
   document.getElementById('legend').innerHTML = projects.map(p=>`<div class="legend-item"><div class="legend-dot" style="background:${p.color}"></div>${p.name}</div>`).join('');
 }
-
-// ── Render Filters ──
 function renderFilters(){
   const bar = document.getElementById('filters');
   let h = `<button class="filter-btn${curFilter==='all'?' active':''}" data-f="all">全部</button>`;
-  projects.forEach(p=>{
-    h += `<button class="filter-btn${curFilter===p.id?' active':''}" data-f="${p.id}">${p.name}</button>`;
-  });
+  projects.forEach(p=>{ h += `<button class="filter-btn${curFilter===p.id?' active':''}" data-f="${p.id}">${p.name}</button>`; });
   bar.innerHTML = h;
   bar.querySelectorAll('.filter-btn').forEach(b=>{
-    b.onclick = ()=>{ curFilter = b.dataset.f; renderFilters(); renderBoard(); };
+    b.onclick = ()=>{ curFilter=b.dataset.f; renderFilters(); renderBoard(); };
   });
 }
-
-// ── Render Board ──
 function renderBoard(){
-  const statuses = ['pending','running','done','blocked'];
-  const filtered = curFilter==='all' ? tasks : tasks.filter(t=>t.project===curFilter);
-  statuses.forEach(st=>{
-    const cont = document.getElementById('cards-'+st);
-    const cnt = document.getElementById('cnt-'+st);
+  const filtered = curFilter==='all'?tasks:tasks.filter(t=>t.project===curFilter);
+  ['pending','running','done','blocked'].forEach(st=>{
     const cards = filtered.filter(t=>t.status===st);
-    cnt.textContent = cards.length;
-    cont.innerHTML = cards.map(cardHTML).join('');
+    document.getElementById('cnt-'+st).textContent = cards.length;
+    document.getElementById('cards-'+st).innerHTML = cards.map(cardHTML).join('');
   });
-  // drag events
   document.querySelectorAll('.card').forEach(c=>{
     c.addEventListener('dragstart', e=>{ dragId=+c.dataset.id; c.classList.add('dragging'); e.dataTransfer.effectAllowed='move'; });
-    c.addEventListener('dragend', e=>{ c.classList.remove('dragging'); document.querySelectorAll('.cards').forEach(x=>x.classList.remove('drag-over')); });
+    c.addEventListener('dragend', ()=>{ c.classList.remove('dragging'); document.querySelectorAll('.cards').forEach(x=>x.classList.remove('drag-over')); });
     c.addEventListener('click', ()=>openTaskModal(+c.dataset.id));
   });
   document.querySelectorAll('.cards').forEach(col=>{
-    col.addEventListener('dragover', e=>{ e.preventDefault(); e.dataTransfer.dropEffect='move'; col.classList.add('drag-over'); });
+    col.addEventListener('dragover', e=>{ e.preventDefault(); col.classList.add('drag-over'); });
     col.addEventListener('dragleave', ()=>col.classList.remove('drag-over'));
-    col.addEventListener('drop', e=>{ e.preventDefault(); col.classList.remove('drag-over'); const lane=col.closest('.lane'); const ns=lane.dataset.status; const t=tasks.find(x=>x.id===dragId); if(t&&t.status!==ns){ t.status=ns; save(); renderBoard(); } });
+    col.addEventListener('drop', e=>{ e.preventDefault(); col.classList.remove('drag-over'); const ns=col.closest('.lane').dataset.status; const t=tasks.find(x=>x.id===dragId); if(t&&t.status!==ns){ t.status=ns; saveAll(); renderBoard(); } });
   });
 }
-
 function cardHTML(t){
-  const p = projById(t.project);
-  const dc = dateCls(t.date);
-  const fl = fmtDate(t.date);
-  const ini = initials(t.owner);
-  return `<div class="card" data-id="${t.id}" data-project="${p.name}" draggable="true">
-  <style>.card[data-project="${p.name}"]::before{background:${p.color}}</style>
-  <div class="card-top"><span class="card-project" style="background:${p.color}22;color:${p.color}">${p.name}</span></div>
+  const p=projById(t.project), dc=dateCls(t.date), fl=fmtDate(t.date);
+  return `<div class="card" data-id="${t.id}" draggable="true">
+  <style>.card[data-id="${t.id}"]::before{background:${p.color}}</style>
+  <span class="card-project" style="background:${p.color}22;color:${p.color}">${p.name}</span>
   <div class="card-title">${t.title}</div>
   <div class="card-meta">
-    <div class="card-owner"><span class="avatar" style="background:${p.color}">${ini}</span>${t.owner||''}</div>
+    <div class="card-owner"><span class="avatar" style="background:${p.color}">${initials(t.owner)}</span>${t.owner||''}</div>
     ${fl?`<span class="card-date ${dc}">${dc==='overdue'?'⚠️ ':''}📅 ${fl}</span>`:''}
   </div></div>`;
 }
 
 // ── Task Modal ──
 function openTaskModal(id=null){
-  editId = id;
-  const sel = document.getElementById('f-project');
-  sel.innerHTML = projects.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+  editId=id;
+  const sel=document.getElementById('f-project');
+  sel.innerHTML=projects.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
   if(id){
-    const t = tasks.find(x=>x.id===id);
+    const t=tasks.find(x=>x.id===id);
     document.getElementById('taskModalTitle').textContent='编辑任务';
     sel.value=t.project; document.getElementById('f-title').value=t.title;
     document.getElementById('f-owner').value=t.owner||''; document.getElementById('f-date').value=t.date||'';
-    document.getElementById('f-status').value=t.status;
-    document.getElementById('btn-del').style.display='';
-  } else {
+    document.getElementById('f-status').value=t.status; document.getElementById('btn-del').style.display='';
+  }else{
     document.getElementById('taskModalTitle').textContent='添加任务';
     document.getElementById('f-title').value=''; document.getElementById('f-owner').value='';
     document.getElementById('f-date').value=''; document.getElementById('f-status').value='pending';
@@ -240,52 +300,54 @@ function openTaskModal(id=null){
 }
 function closeTaskModal(){ document.getElementById('taskModal').classList.remove('open'); editId=null; }
 function saveCard(){
-  const title = document.getElementById('f-title').value.trim();
+  const title=document.getElementById('f-title').value.trim();
   if(!title){ alert('请填写任务描述'); return; }
-  const d = { project:document.getElementById('f-project').value, title, owner:document.getElementById('f-owner').value.trim(), date:document.getElementById('f-date').value, status:document.getElementById('f-status').value };
-  if(editId){ const t=tasks.find(x=>x.id===editId); Object.assign(t,d); }
-  else { d.id = Date.now(); tasks.push(d); }
-  save(); closeTaskModal(); renderBoard();
+  const d={project:document.getElementById('f-project').value,title,owner:document.getElementById('f-owner').value.trim(),date:document.getElementById('f-date').value,status:document.getElementById('f-status').value};
+  if(editId){ Object.assign(tasks.find(x=>x.id===editId),d); } else { d.id=Date.now(); tasks.push(d); }
+  saveAll(); closeTaskModal(); renderBoard();
 }
-function delCard(){ if(!editId) return; if(!confirm('确定删除此任务？')) return; tasks=tasks.filter(x=>x.id!==editId); save(); closeTaskModal(); renderBoard(); }
+function delCard(){
+  if(!editId) return;
+  if(!confirm('确定删除此任务？')) return;
+  tasks=tasks.filter(x=>x.id!==editId);
+  saveAll(); closeTaskModal(); renderBoard();
+}
 
 // ── Project Modal ──
 function openProjModal(){
-  tempProjects = JSON.parse(JSON.stringify(projects));
+  tempProjects=JSON.parse(JSON.stringify(projects));
   renderProjList();
   document.getElementById('projModal').classList.add('open');
 }
-function closeProjModal(){ document.getElementById('projModal').classList.remove('open'); tempProjects=[]; }
+function closeProjModal(){ document.getElementById('projModal').classList.remove('open'); }
 function renderProjList(){
-  const el = document.getElementById('proj-list');
-  el.innerHTML = tempProjects.map((p,i)=>`<div class="proj-row">
-    <div class="color-pick"><div class="pdot" style="background:${p.color}"></div><input type="color" value="${p.color}" onchange="tempProjects[${i}].color=this.value;this.previousElementSibling.style.background=this.value"></div>
+  document.getElementById('proj-list').innerHTML=tempProjects.map((p,i)=>`<div class="proj-row">
+    <div class="proj-dot" style="background:${p.color}">
+      <input type="color" value="${p.color}" onchange="tempProjects[${i}].color=this.value;this.parentElement.style.background=this.value">
+    </div>
     <input value="${p.name}" onchange="tempProjects[${i}].name=this.value">
-    <button class="rm" onclick="tempProjects.splice(${i},1);renderProjList()">✕</button>
+    <button class="proj-rm" onclick="tempProjects.splice(${i},1);renderProjList()">✕</button>
   </div>`).join('');
 }
 function addProject(){
-  const id = 'p' + Date.now();
-  tempProjects.push({id, name:'新项目', color:'#'+Math.floor(Math.random()*0xffffff).toString(16).padStart(6,'0')});
+  const id='p'+Date.now(), h=Math.floor(Math.random()*0x1000000).toString(16).padStart(6,'0');
+  tempProjects.push({id,name:'新项目',color:'#'+h});
   renderProjList();
 }
 function saveProjects(){
-  projects = JSON.parse(JSON.stringify(tempProjects));
-  saveProj();
-  // remove orphan tasks
-  const pids = new Set(projects.map(p=>p.id));
-  tasks = tasks.filter(t=>pids.has(t.project));
-  save();
-  renderLegend(); renderFilters(); renderBoard();
-  closeProjModal();
+  projects=JSON.parse(JSON.stringify(tempProjects));
+  const pids=new Set(projects.map(p=>p.id));
+  tasks=tasks.filter(t=>pids.has(t.project));
+  saveAll(); renderLegend(); renderFilters(); renderBoard(); closeProjModal();
 }
 
 // ── Init ──
-load();
-document.getElementById('today-label').textContent = today.replace(/-/g,'/');
+document.getElementById('today-label').textContent=today.replace(/-/g,'/');
+loadFromLS();
+loadFromURL();
 renderLegend(); renderFilters(); renderBoard();
 
-// Close modals on overlay click / Escape
+// Close modals
 document.getElementById('taskModal').addEventListener('click',e=>{ if(e.target.id==='taskModal') closeTaskModal(); });
 document.getElementById('projModal').addEventListener('click',e=>{ if(e.target.id==='projModal') closeProjModal(); });
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeTaskModal(); closeProjModal(); } });
